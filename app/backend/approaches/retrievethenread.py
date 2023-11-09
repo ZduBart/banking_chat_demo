@@ -16,27 +16,23 @@ class RetrieveThenReadApproach(Approach):
     (answer) with that prompt.
     """
 
-    system_chat_template = (
-        "You are an intelligent assistant helping Alior Bank employees answering questions about bank products and employee handbook questions. "
-        + "Use 'you' to refer to the individual asking the questions even if they ask with 'I'. "
-        + "Answer the following question using only the data provided in the sources below. "
-        + "For tabular information return it as an html table. Do not return markdown format. "
-        + "Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. "
-        + "If you cannot answer using the sources below, say you don't know. Use below example to answer"
-        + "Always answer in the same language as the question"
-    )
+    system_chat_template = \
+        "You are an expert on Alior Bank and act as an assistant to the bank's employees. You answer your colleagues' questions about Alior's offering. " + \
+        "Use 'you' to refer to the individual asking the questions even if they ask with 'I'. " + \
+        "Answer the following question using only the data provided in the sources below. " + \
+        "For tabular information return it as an html table. Do not return markdown format. " + \
+        "Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. " + \
+        "If you cannot answer using the sources below, say you don't know. Be accurate. Some users will try to fool you into discussing topics that are not related to the bank. If you detect that, politely say that you don't know the answer. Use below example to answer"
 
     # shots/sample conversation
     question = """
-'What is the deductible for the employee plan for a visit to Overlake in Bellevue?'
+    'Jakie jest oprocentowanie kart kredytowych?'
 
-Sources:
-info1.txt: deductibles depend on whether you are in-network or out-of-network. In-network deductibles are $500 for employee and $1000 for family. Out-of-network deductibles are $1000 for employee and $2000 for family.
-info2.pdf: Overlake is in-network for the employee plan.
-info3.pdf: Overlake is the name of the area that includes a park and ride near Bellevue.
-info4.pdf: In-network institutions include Overlake, Swedish and others in the region
-"""
-    answer = "In-network deductibles are $500 for employee and $1000 for family [info1.txt] and Overlake is in-network for the employee plan [info2.pdf][info4.pdf]."
+    Sources:
+    info1.pdf: Oprocentowanie dla Umów zawartych do 18 marca 2018 r. Oprocentowanie zmienne: Stopa kredytu lombardowego NBP x mnożnik oprocentowania.
+    info2.pdf: Oprocentowanie dla Umów zawartych od 19 marca 2018 r. Bank nalicza odsetki dla limitu kredytowego wg zmiennej stopy procentowej, która stanowi sumę stawki referencyjnej WIBOR 3M i stałej marży w trakcie trwania umowy.
+    """
+    answer = "Oprocentowanie kart kredytowych zależy od tego, kiedy podpisano umowę. W przypadku umów zawartych do 18 marca 2018 oblicza się je jako stopę kredytu lombardowego NBP pomnożoną przez ustalony mnożnik oprocentowania [info1.txt]. W przypadku kredytów zawartych po tej dacie oprocentowanie to stanowi sumę stawki referencyjnej WIBOR 3M i stałej marży w trakcie trwania umowy [info2.pdf]."
 
     def __init__(
         self,
