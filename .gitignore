@@ -151,3 +151,4 @@ static/
 /scripts/scripts/.venv2/
 /backup.env
 /.azure/
+/workflows_backup/
